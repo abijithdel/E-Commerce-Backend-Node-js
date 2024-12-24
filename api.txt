@@ -1,3 +1,9 @@
 # Auth
 --------
 Sign up = url: /auth/signup. | method:POST. | body:{email, password, cpassword}
+Sign in = url: /auth/signin. | method:POST. | body:{ email, password }
+
+
+# Admin
+---------
+check user role (admin) = url: /admin/isadmin. | method:POST. | body:{ user_id }
