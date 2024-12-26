@@ -1,4 +1,5 @@
 const UserModel = require('../models/user')
+const ProductModel = require('../models/product')
 
 function isAdmin(user_id){
     return new Promise( async (resolve, reject) => {
@@ -15,4 +16,23 @@ function isAdmin(user_id){
     })
 }
 
-module.exports = { isAdmin }
+function UploadProduct(name,price,category,description,filename){
+    return new Promise( async (resolve, reject) => {
+        try {
+            const NewProduct = new ProductModel({
+                name:name,
+                price:price,
+                category:category,
+                description:description,
+                filename:filename
+            })
+            await NewProduct.save()
+            resolve({status:true,message:'Upload New Product Successfully'})
+        } catch (error) {
+            console.log(error)
+            reject({status:false,message:error.message})
+        }
+    })
+}
+
+module.exports = { isAdmin, UploadProduct }
