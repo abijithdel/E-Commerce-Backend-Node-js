@@ -52,4 +52,16 @@ function CreatePoster(title,img_name){
     })
 }
 
-module.exports = { isAdmin, UploadProduct, CreatePoster }
+function GetAllPosters(){
+    return new Promise( async (resolve, reject) => {
+        try {
+            const Posters = await PostertModel.find()
+            resolve({status:true,posters:Posters})
+        } catch (error) {
+            console.log(error)
+            reject({status:false,message:error.message})
+        }
+    })
+}
+
+module.exports = { isAdmin, UploadProduct, CreatePoster, GetAllPosters }

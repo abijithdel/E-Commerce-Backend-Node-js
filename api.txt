@@ -8,5 +8,6 @@ Sign in = url: /auth/signin. | method:POST. | body:{ email, password }
 # Admin
 ---------
 check user role (admin) = url: /admin/isadmin. | method:POST. | body:{ user_id }
-Add Product = url: /admin/upload-product. | method:POST. | body:{ add all data in FormData() function. append this fildes to FormData => (name,price,category,description,file). and send FormData}
-Add Poster = url: /admin/createposter. | method:POST. | body:{ add all data in FormData() function. append this fildes to FormData => (title,img). and send FormData}
+Create Product = url: /admin/upload-product. | method:POST. | body:{ add all data in FormData() function. append this fildes to FormData => (name,price,category,description,file). and send FormData}
+Create Poster = url: /admin/createposter. | method:POST. | body:{ add all data in FormData() function. append this fildes to FormData => (title,img). and send FormData}
+Get Poster = url: /admin/allposters. | method:GET | log = success:{status,obj}, error:{status,message}
