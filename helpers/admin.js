@@ -1,5 +1,6 @@
 const UserModel = require('../models/user')
 const ProductModel = require('../models/product')
+const PostertModel = require('../models/poster')
 
 function isAdmin(user_id){
     return new Promise( async (resolve, reject) => {
@@ -35,4 +36,20 @@ function UploadProduct(name,price,category,description,filename){
     })
 }
 
-module.exports = { isAdmin, UploadProduct }
+function CreatePoster(title,img_name){
+    return new Promise( async (resolve, reject) => {
+        try {
+            const NewPoster = new PostertModel({
+                title:title,
+                img:img_name
+            })
+            await NewPoster.save()
+            resolve({status:true,message:'Successfully Upload Poster'})
+        } catch (error) {
+            console.log(error)
+            reject({status:false,message:error.message})
+        }
+    })
+}
+
+module.exports = { isAdmin, UploadProduct, CreatePoster }

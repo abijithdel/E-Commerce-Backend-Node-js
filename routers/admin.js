@@ -1,6 +1,6 @@
 const express = require('express')
 const route = express.Router()
-const { isAdmin, UploadProduct } = require('../helpers/admin')
+const { isAdmin, UploadProduct, CreatePoster } = require('../helpers/admin')
 const Upload = require('../config/multer')
 
 route.post('/isadmin',(req,res)=>{
@@ -16,6 +16,14 @@ route.post('/upload-product', Upload.single('img'),(req,res) => {
    UploadProduct(name,price,category,description,filename)
    .then(response => res.json(response))
    .catch(err => res.json(err))
+})
+
+route.post('/createposter', Upload.single('posterimg'), (req,res) => {
+    const { title } = req.body;
+    const filename = req.file.filename;
+    CreatePoster(title,filename)
+    .then(response => res.json(response))
+    .catch(err => res.json(err))
 })
 
 module.exports = route;
