@@ -1,6 +1,6 @@
 const express = require('express')
 const route = express.Router()
-const { isAdmin, UploadProduct, CreatePoster, GetAllPosters } = require('../helpers/admin')
+const { isAdmin, UploadProduct, CreatePoster, GetAllPosters, GetAllProducts, GetSpecial } = require('../helpers/admin')
 const Upload = require('../config/multer')
 
 route.post('/isadmin',(req,res)=>{
@@ -28,6 +28,18 @@ route.post('/createposter', Upload.single('posterimg'), (req,res) => {
 
 route.get('/allposters', (req,res) => {
     GetAllPosters()
+    .then(response => res.json(response))
+    .catch(err => res.json(err))
+})
+
+route.get('/get-all-products', (req,res) => {
+    GetAllProducts()
+    .then(response => res.json(response))
+    .catch(err => res.json(err))
+})
+
+route.get('/special', (req,res) => {
+    GetSpecial()
     .then(response => res.json(response))
     .catch(err => res.json(err))
 })

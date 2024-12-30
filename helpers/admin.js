@@ -64,4 +64,44 @@ function GetAllPosters(){
     })
 }
 
-module.exports = { isAdmin, UploadProduct, CreatePoster, GetAllPosters }
+function GetAllProducts(){
+    let Products = []
+    return new Promise( async (resolve, reject) => {
+        try {
+            const ProductsArray = await ProductModel.find()
+            for(let x=0;x<ProductsArray.length;x++){
+                let item = ProductsArray[x]
+                item.description = item.description.slice(0,55)
+                item.name = item.name.slice(0,14)
+                Products.push(item)
+            }
+            resolve({status:true,Products})
+        } catch (error) {
+            console.log(error)
+            reject({status:false,message:error.message})
+        }
+    })
+}
+
+function GetSpecial(){
+    let special = []
+    return new Promise( async (resolve, reject) => {
+        try {
+            const products = await ProductModel.find()
+            const ProductLength = products.length
+            for(let x=0;x<2;x++){
+                const randomInteger = Math.floor(Math.random() * ProductLength)
+                let item = products[randomInteger]
+                item.description = item.description.slice(0,55)
+                item.name = item.name.slice(0,7)
+                special.push(item)
+            }
+            resolve({status:true,special})
+        } catch (error) {
+            console.log(error)
+            reject({status:false,message:error.message})
+        }
+    })
+}
+
+module.exports = { isAdmin, UploadProduct, CreatePoster, GetAllPosters, GetAllProducts, GetSpecial }

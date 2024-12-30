@@ -6,6 +6,7 @@ const ProductModel = new mongoose.Schema({
     category : { type:String },
     description : { type:String },
     filename : { type:String },
+    stock : { type:Boolean, default:true },
 })
 
 module.exports = mongoose.model('product', ProductModel)
