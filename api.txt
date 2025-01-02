@@ -13,6 +13,8 @@ Create Poster = url: /admin/createposter. | method:POST. | body:{ add all data i
 Get Poster = url: /admin/allposters. | method:GET | log = success:{status,obj}, error:{status,message}
 Get Products = url: /admin/get-all-products. | method:GET | log = success:{status,obj}, error:{status,message}
 Get special = url: /admin/special. | method:GET | log = success:{status,obj}, error:{status,message}. | not: special 2 products
+Get All Users = url: /admin/all-users/:user_id. | method:GET | log = success:{status,obj}, error:{status,message}
+Get All Orders = url /admin/all-orders | method:GET | log = success:{status,obj}, error:{status,message}
 
 # Index
 
@@ -22,3 +24,4 @@ Get Cart Item Count = url: /cart-item-count/:user_id | method:GET | log = succes
 Get Cart Items = url: /cart-items/:user_id. | method:GET | log = success:{status,message,obj}, error:{status,message}. 
 Save And Edit Address = url: /save-address. | method:POST | body:{user_id, countri, name, phone, pincode, address, state}
 Get Address = url: /get-address/:user_id. | method:GET | log = success:{status,obj}, error:{status,message}. 
+Create CashOn Order = url: /order-cashon | method:POST | body: { user_id,price,quantity,product,address,paymethods }
