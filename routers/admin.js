@@ -10,6 +10,10 @@ const {
   GetAllUser,
   GetOrders,
   CancelOrder,
+  DeleteProduct,
+  EditProduct,
+  DeleteUser,
+  DeletePoster
 } = require("../helpers/admin");
 const Upload = require("../config/multer");
 
@@ -55,23 +59,55 @@ route.get("/special", (req, res) => {
 });
 
 route.get("/all-users/:user_id", (req, res) => {
-    const { user_id } = req.params
+  const { user_id } = req.params;
   GetAllUser(user_id)
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
 
-route.get('/all-orders', (req,res) => {
+route.get("/all-orders", (req, res) => {
   GetOrders()
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
+route.post("/change-order-status", (req, res) => {
+  const { order_id, status } = req.body;
+  CancelOrder(order_id, status)
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
+route.delete("/delete-product", (req, res) => {
+  const { product_id, user_id } = req.body;
+  DeleteProduct(product_id, user_id)
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
+route.post('/edit-product',Upload.single("newimg"), (req,res) => {
+  let filename =null
+  const { name,price,category,description,product_id } = req.body;
+  if(req.file){
+    filename = req.file.filename;
+  }
+  EditProduct(name,price,category,description,filename,product_id)
+  .then(response => res.json(response))
+  .catch(err => res.json(err))
+})
+
+route.delete('/delete-user',(req,res) => {
+  const { user_id } = req.body;
+  DeleteUser(user_id)
   .then(response => res.json(response))
   .catch(err => res.json(err));
 })
 
-route.get('/cancel-order/:order_id', (req,res) => {
-  const { order_id } = req.params
-  CancelOrder(order_id)
+route.delete('/delete-poster', (req,res) => {
+  const { poster_id } = req.body;
+  DeletePoster(poster_id)
   .then(response => res.json(response))
-  .catch(err => res.json(err));
+  .catch(err => console.log(err))
 })
 
 module.exports = route;

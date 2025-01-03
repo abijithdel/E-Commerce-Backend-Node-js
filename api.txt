@@ -15,6 +15,11 @@ Get Products = url: /admin/get-all-products. | method:GET | log = success:{statu
 Get special = url: /admin/special. | method:GET | log = success:{status,obj}, error:{status,message}. | not: special 2 products
 Get All Users = url: /admin/all-users/:user_id. | method:GET | log = success:{status,obj}, error:{status,message}
 Get All Orders = url /admin/all-orders | method:GET | log = success:{status,obj}, error:{status,message}
+Change Order Status = url: /admin/change-order-status | method:POST | body = { order_id, status }, status = {'Cancel','Shipped','Delivered'}
+Delete Product = url: /admin/delete-product. | method:DELETE | body = { product_id, admin_user_id }
+Edit Product = url: /admin/edit-product. | method:POST | body = { name,price,category,description,product_id,file } = 'in FormData()'
+Delete User = url: /admin/delete-user. | method:POST | body = { user_id }
+Delete Poster = url: /admin/delete-poster. | method:DELETE | body = { poster_id }
 
 # Index
 
