@@ -202,6 +202,25 @@ function GetOrders(user_id){
     })
 }
 
+function Search(key){
+    let Result = []
+    return new Promise( async (resolve, reject) => {
+        try {
+            const quarry = key.replace('-',' ')
+            const Product = await ProductModel.find({ name: new RegExp(quarry, "i") })
+            for(let x in Product){
+                Product[x].name = Product[x].name.slice(0,25)
+                Product[x].description = Product[x].description.slice(0,59)
+                Result.push(Product[x])
+            }
+            return resolve({status:true,Result})
+        } catch (error) {
+            console.log(error)
+            reject({status:false,message:error.message})
+        }
+    })
+}
+
 module.exports = {
     OneProduct,
     AddtoCart,
@@ -211,4 +230,5 @@ module.exports = {
     GetAddress,
     OrderCashon,
     GetOrders,
+    Search
 };

@@ -242,5 +242,5 @@ module.exports = {
     DeleteProduct,
     EditProduct,
     DeleteUser,
-    DeletePoster
+    DeletePoster,
 };
