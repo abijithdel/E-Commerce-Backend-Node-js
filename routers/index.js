@@ -10,6 +10,7 @@ const {
   OrderCashon,
   GetOrders,
   Search,
+  EditUser
 } = require("../helpers/index");
 const countries = require("../config/countries");
 
@@ -80,5 +81,12 @@ route.get("/search/:key", (req, res) => {
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
+
+route.post('/edit-user', (req,res) => {
+  const { email,user_id } = req.body
+  EditUser(user_id,email)
+  .then(response => res.json(response))
+  .catch(err => res.json(err))
+})
 
 module.exports = route;

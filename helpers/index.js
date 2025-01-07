@@ -2,6 +2,7 @@ const ProductModel = require("../models/product");
 const CartModel = require("../models/cart");
 const AddressModel = require("../models/address");
 const OrderModel = require("../models/orders");
+const UserModel = require('../models/user')
 
 function OneProduct(id) {
     return new Promise(async (resolve, reject) => {
@@ -221,6 +222,20 @@ function Search(key){
     })
 }
 
+function EditUser(user_id,email){
+    return new Promise( async (resolve, reject) => {
+        try {
+            const user = await UserModel.findById(user_id)
+            user.email = email;
+            await user.save()
+            resolve({status:true,message:'Email Successfully Changed',user})
+        } catch (error) {
+            console.log(error)
+            reject({status:false,message:error.message})
+        }
+    })
+}
+
 module.exports = {
     OneProduct,
     AddtoCart,
@@ -230,5 +245,6 @@ module.exports = {
     GetAddress,
     OrderCashon,
     GetOrders,
-    Search
+    Search,
+    EditUser
 };
