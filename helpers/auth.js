@@ -116,19 +116,19 @@ function ForgotPassword(email) {
   });
 }
 
-function VerifyToken(token){
-  return new Promise(  (resolve, reject) => {
+function ResetPassword(token,password){
+  return new Promise( async (resolve, reject) => {
     try {
       const decoded = jwt.verify(token, 'god123');
-      if(!decoded){
-        return resolve({status:false,message:'invalid token'});
-      }
-      resolve({status:true,message:'reset Your Pass Now'})
+      const user = await UserModel.findById(decoded.userId)
+      const hashedPassword = await bcrypt.hash(password, 10)
+      user.password = hashedPassword;
+      await user.save()
+      resolve({status:true,message:'Password Successfully Changed'})
     } catch (error) {
-      console.log(error)
-      reject({sattus:false,message:error.message})
+      reject({status:false,message:error.message})
     }
   })
 }
 
-module.exports = { Signup, Signin, ForgotPassword, VerifyToken };
+module.exports = { Signup, Signin, ForgotPassword, ResetPassword };

@@ -4,7 +4,7 @@ const {
   Signup,
   Signin,
   ForgotPassword,
-  VerifyToken,
+  ResetPassword
 } = require("../helpers/auth");
 
 route.post("/signup", (req, res) => {
@@ -28,11 +28,11 @@ route.post("/forgot-password", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-route.post("/verify-token", (req, res) => {
-  const { token } = req.body;
-  VerifyToken(token)
-    .then((response) => res.json(response))
-    .catch((err) => res.json(err));
-});
+route.post('/reset-password', (req,res) => {
+  const { password,token } = req.body;
+  ResetPassword(token,password)
+  .then(response => res.json(response))
+  .catch(err => res.json(err))
+})
 
 module.exports = route;

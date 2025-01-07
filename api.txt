@@ -5,6 +5,9 @@ Sign in = url: /auth/signin. | method:POST. | body:{ email, password }
     ## Create Admin User:
       mongosg: db.users.updateOne( { email: "admin@domain.com" }, { $set: { admin: true } } )
 
+Forgot Password = url: /auth/forgot-password | method:POST | body: { email }
+Reset Password = url: /auth/reset-password | method:POST | body: { password, token }
+
 # Admin
 ---------
 check user role (admin) = url: /admin/isadmin. | method:POST. | body:{ user_id }
