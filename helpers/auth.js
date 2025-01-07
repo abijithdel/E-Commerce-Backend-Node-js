@@ -1,18 +1,21 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user");
 const Mail = require("../config/nodemailer");
+const bcryptjs = require('bcryptjs')
+const jwt = require('jsonwebtoken');
+const {  ResetPass } = require('./emails')
+
 
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-
 function Signup(email, password, cpassword) {
   return new Promise(async (resolve, reject) => {
     try {
-      if(!isValidEmail(email)){
-        resolve({status:false,message:'Enter Email'})
+      if (!isValidEmail(email)) {
+        resolve({ status: false, message: "Enter Email" });
       }
       const user = await UserModel.findOne({ email: email });
       if (user) {
@@ -42,7 +45,7 @@ function Signup(email, password, cpassword) {
         NewUser,
       });
       Mail.sendMail({
-        from: "alert@digishopper.shop",
+        from: '"Welcome to Digishopper" <alert@digishopper.shop>',
         to: email,
         subject: "Welcome to Digishopper",
         text: `Hello ${email}, 
@@ -91,4 +94,41 @@ function Signin(email, password) {
   });
 }
 
-module.exports = { Signup, Signin };
+function ForgotPassword(email) {
+  return new Promise( async (resolve, reject) => {
+    try {
+      if (!isValidEmail(email)) {
+        resolve({ status: false, message: "Enter Valid Email Address" });
+        return;
+      }
+      const user = await UserModel.findOne({ email })
+      if(!user){
+        resolve({status:false,message:'User Not Found'})
+        return;
+      }
+      const token = jwt.sign({ userId: user._id }, 'god123', { expiresIn: '1h' });
+      ResetPass(token,email)
+      resolve({status:true,message:'Successfully Send Mail'})
+    } catch (error) {
+      console.log(error)
+      reject({status:false,message:error.message})
+    }
+  });
+}
+
+function VerifyToken(token){
+  return new Promise(  (resolve, reject) => {
+    try {
+      const decoded = jwt.verify(token, 'god123');
+      if(!decoded){
+        return resolve({status:false,message:'invalid token'});
+      }
+      resolve({status:true,message:'reset Your Pass Now'})
+    } catch (error) {
+      console.log(error)
+      reject({sattus:false,message:error.message})
+    }
+  })
+}
+
+module.exports = { Signup, Signin, ForgotPassword, VerifyToken };

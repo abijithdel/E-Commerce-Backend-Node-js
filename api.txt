@@ -30,3 +30,4 @@ Get Cart Items = url: /cart-items/:user_id. | method:GET | log = success:{status
 Save And Edit Address = url: /save-address. | method:POST | body:{user_id, countri, name, phone, pincode, address, state}
 Get Address = url: /get-address/:user_id. | method:GET | log = success:{status,obj}, error:{status,message}. 
 Create CashOn Order = url: /order-cashon | method:POST | body: { user_id,price,quantity,product,address,paymethods }
+Edit User = url: /edit-user | methodPOST | body : { email, user_id }

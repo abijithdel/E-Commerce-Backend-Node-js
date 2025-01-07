@@ -1,12 +1,12 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: "",
-  port: 587,
-  secure: false,
+  host: "smtp.zoho.in",
+  port: 465,
+  secure: true,
   auth: {
-    user: "",
-    pass: "",
+    user: "alert@digishopper.shop",
+    pass: "5Bbh4wG9G6LB",
   }
 });
 
