@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: "alert@digishopper.shop",
-    pass: "",
+    pass: "5Bbh4wG9G6LB",
   }
 });
 

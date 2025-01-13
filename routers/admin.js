@@ -13,7 +13,8 @@ const {
   DeleteProduct,
   EditProduct,
   DeleteUser,
-  DeletePoster
+  DeletePoster,
+  Analytics
 } = require("../helpers/admin");
 const Upload = require("../config/multer");
 
@@ -85,29 +86,35 @@ route.delete("/delete-product", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-route.post('/edit-product',Upload.single("newimg"), (req,res) => {
-  let filename =null
-  const { name,price,category,description,product_id } = req.body;
-  if(req.file){
+route.post('/edit-product', Upload.single("newimg"), (req, res) => {
+  let filename = null
+  const { name, price, category, description, product_id } = req.body;
+  if (req.file) {
     filename = req.file.filename;
   }
-  EditProduct(name,price,category,description,filename,product_id)
-  .then(response => res.json(response))
-  .catch(err => res.json(err))
+  EditProduct(name, price, category, description, filename, product_id)
+    .then(response => res.json(response))
+    .catch(err => res.json(err))
 })
 
-route.delete('/delete-user',(req,res) => {
+route.delete('/delete-user', (req, res) => {
   const { user_id } = req.body;
   DeleteUser(user_id)
-  .then(response => res.json(response))
-  .catch(err => res.json(err));
+    .then(response => res.json(response))
+    .catch(err => res.json(err));
 })
 
-route.delete('/delete-poster', (req,res) => {
+route.delete('/delete-poster', (req, res) => {
   const { poster_id } = req.body;
   DeletePoster(poster_id)
-  .then(response => res.json(response))
-  .catch(err => console.log(err))
+    .then(response => res.json(response))
+    .catch(err => console.log(err))
+})
+
+route.get('/analytics', (req, res) => {
+  Analytics()
+    .then(response => res.json(response))
+    .catch(err => res.json(err))
 })
 
 module.exports = route;

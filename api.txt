@@ -23,6 +23,7 @@ Delete Product = url: /admin/delete-product. | method:DELETE | body = { product_
 Edit Product = url: /admin/edit-product. | method:POST | body = { name,price,category,description,product_id,file } = 'in FormData()'
 Delete User = url: /admin/delete-user. | method:POST | body = { user_id }
 Delete Poster = url: /admin/delete-poster. | method:DELETE | body = { poster_id }
+Admin Panel Analytics = url: /admin/analytics. | method:GET. | log = success: {status,products,users,orders,posters}, error:{status,message}
 
 # Index
 

@@ -231,6 +231,21 @@ function DeletePoster(poster_id) {
   });
 }
 
+function Analytics() {
+  return new Promise( async (resolve, reject) => {
+    try {
+      const products = await ProductModel.countDocuments()
+      const users = await UserModel.countDocuments()
+      const orders = await OrderModel.countDocuments()
+      const posters = await PostertModel.countDocuments()
+      resolve({status:true,products,users,orders,posters})
+    } catch (error) {
+      console.log(error)
+      reject({status:false,message:error.message})
+    }
+  })
+}
+
 module.exports = {
   isAdmin,
   UploadProduct,
@@ -245,4 +260,5 @@ module.exports = {
   EditProduct,
   DeleteUser,
   DeletePoster,
+  Analytics,
 };
